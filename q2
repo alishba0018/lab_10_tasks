@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <math.h>
+
+struct point{
+    float x;
+    float y;
+};
+
+float distance(struct point p1, struct point p2){
+    return sqrt((p2.x-p1.x)*(p2.x-p1.x)+(p2.y-p1.y)*(p2.y-p1.y));
+}
+
+int isInside(struct point p, struct point bottom_left, struct point top_right) {
+    return (p.x >= bottom_left.x && p.x <= top_right.x && p.y >= bottom_left.y && p.y <= top_right.y);
+}
+
+int main(){
+    struct point p1,p2,bottom_left,top_right;
+    printf("enter the value of x-coordinate and y-coordinate of point 1:");
+    scanf("%f %f",&p1.x,&p1.y);
+    printf("enter the value of x-coordinate and y-coordinate of point 2:");
+    scanf("%f %f",&p2.x,&p2.y);
+    printf("the distance between point 1 and point 2 is: %f \n",distance(p1,p2));
+    printf("enter the value of x-coordinate and y-coordinate of bottom left corner:");
+    scanf("%f %f",&bottom_left.x,&bottom_left.y);
+    printf("enter the value of x-coordinate and y-coordinate of top right corner:");
+    scanf("%f %f",&top_right.x,&top_right.y);
+    if (isInside(p1, bottom_left, top_right)) {
+        printf("Point 1 is inside the rectangle.\n");
+    } else {
+        printf("Point 1 is outside the rectangle.\n");
+    }
+    
+    if (isInside(p2, bottom_left, top_right)) {
+        printf("Point 2 is inside the rectangle.\n");
+    } else {
+        printf("Point 2 is outside the rectangle.\n");
+    }
+
+    return 0;
+}
