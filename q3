@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+const float maxTemp = 95.4;
+
+void check(float temp){
+    static int count=0;
+    if(temp>=maxTemp){
+        count++;
+    }
+    printf("temperature exceeded the limit %d times\n",count);
+    return;
+}
+
+int main(){
+    float temp;
+    for(int i=0;i<5;i++){
+    printf("enter temperature in celcius:");
+    scanf("%f",&temp);
+    check(temp);
+    }
+    
+    return 0;
+}
