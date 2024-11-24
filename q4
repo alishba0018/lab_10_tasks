@@ -1,0 +1,95 @@
+#include <stdio.h>
+#include <string.h>
+
+typedef struct car {
+    char make[20];
+    char model[20];
+    int year;
+    float price;
+    float mileage;
+} car;
+
+car dealership[100];
+int car_count = 0; 
+
+void add_car() {
+    if (car_count < 100) {
+        printf("Enter the make of the car: ");
+        fgets(dealership[car_count].make, 20, stdin);
+        printf("Enter the model of the car: ");
+        fgets(dealership[car_count].model, 20, stdin);
+        printf("Enter the year of the car: ");
+        scanf("%d", &dealership[car_count].year);
+        printf("Enter the price of the car: ");
+        scanf("%f", &dealership[car_count].price);
+        printf("Enter the mileage of the car: ");
+        scanf("%f", &dealership[car_count].mileage);
+        car_count++;
+    } 
+    else {
+        printf("Sorry, the dealership is full.\n");
+    }
+}
+
+void search_car() {
+    char search[20];
+    int found = 0;
+
+    printf("Enter the make/model of the car you want to search for: ");
+    fgets(search, 20, stdin);
+    printf("Cars found for '%s':\n", search);
+    for (int i = 0; i < car_count; i++) {
+        if (strstr(dealership[i].make, search) != NULL || strstr(dealership[i].model, search) != NULL) {
+            printf("%d. %d %s %s - $%.2f, Mileage: %.2f miles\n", i + 1, dealership[i].year,
+                   dealership[i].make, dealership[i].model, dealership[i].price, dealership[i].mileage);
+            found = 1;
+        }
+    }
+
+    if (!found) {
+        printf("No cars found for '%s'.\n", search);
+    }
+}
+
+void display() {
+    if (car_count == 0) {
+        printf("No cars available.\n");
+    } else {
+        printf("\nAvailable Cars:\n");
+        for (int i = 0; i < car_count; i++) {
+            printf("%d. %d %s %s - $%.2f, Mileage: %.2f miles\n", i + 1, dealership[i].year,
+                   dealership[i].make, dealership[i].model, dealership[i].price, dealership[i].mileage);
+        }
+    }
+}
+
+int main() {
+    int choice;
+
+    while (1) {
+        printf("\n1. Add New Car\n");
+        printf("2. Display Available Cars\n");
+        printf("3. Search Cars by Make or Model\n");
+        printf("4. Exit\n");
+        printf("Enter your choice (1-4): ");
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1:
+                add_car();
+                break;
+            case 2:
+                display();
+                break;
+            case 3:
+                search_car();
+                break;
+            case 4:
+                printf("Exiting the program.\n");
+                return 0;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    }
+
+    return 0;
+}
