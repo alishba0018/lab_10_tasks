@@ -1,0 +1,114 @@
+#include <stdio.h>
+#include <string.h>
+
+typedef struct travel_package {
+    char package_name[50];
+    char destination[50];
+    int duration;  
+    float cost;
+    int seats_available;
+} TravelPackage;
+
+TravelPackage packages[45]; 
+int package_count = 0;  
+
+void add_package() {
+    if (package_count < 45) {
+        printf("Enter package name: ");
+        fgets(packages[package_count].package_name, 50, stdin);
+        packages[package_count].package_name[strcspn(packages[package_count].package_name, "\n")] = 0;
+
+        printf("Enter destination: ");
+        fgets(packages[package_count].destination, 50, stdin);
+        packages[package_count].destination[strcspn(packages[package_count].destination, "\n")] = 0;
+
+        printf("Enter duration (in days): ");
+        scanf("%d", &packages[package_count].duration);
+
+        printf("Enter cost of the package: ");
+        scanf("%f", &packages[package_count].cost);
+
+        printf("Enter number of seats available: ");
+        scanf("%d", &packages[package_count].seats_available);
+        getchar();
+
+        package_count++;
+        printf("Package added successfully!\n");
+    } else {
+        printf("Cannot add more packages, maximum limit reached.\n");
+    }
+}
+
+void book_package() {
+    char search[50];
+    int found = 0;
+
+    printf("Enter the name of the package you want to book: ");
+    fgets(search, 50, stdin);
+    search[strcspn(search, "\n")] = 0;
+
+    for (int i = 0; i < package_count; i++) {
+        if (strcmp(packages[i].package_name, search) == 0) {
+            if (packages[i].seats_available > 0) {
+                packages[i].seats_available--; 
+                printf("Package booked successfully! Seats left: %d\n", packages[i].seats_available);
+            } else {
+                printf("Sorry, no seats available for the package '%s'.\n", packages[i].package_name);
+            }
+            found = 1;
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("Package not found.\n");
+    }
+}
+
+void display_packages() {
+    if (package_count == 0) {
+        printf("No packages available.\n");
+    } else {
+        printf("\nAvailable Travel Packages:\n");
+        for (int i = 0; i < package_count; i++) {
+            printf("%d. Package: %s\n", i + 1, packages[i].package_name);
+            printf("   Destination: %s\n", packages[i].destination);
+            printf("   Duration: %d days\n", packages[i].duration);
+            printf("   Cost: $%.2f\n", packages[i].cost);
+            printf("   Seats Available: %d\n\n", packages[i].seats_available);
+        }
+    }
+}
+
+int main() {
+    int choice;
+
+    while (1) {
+        printf("1. Add New Travel Package\n");
+        printf("2. Book a Travel Package\n");
+        printf("3. Display Available Travel Packages\n");
+        printf("4. Exit\n");
+        printf("Enter your choice (1-4): ");
+        scanf("%d", &choice);
+        getchar(); 
+
+        switch (choice) {
+            case 1:
+                add_package();
+                break;
+            case 2:
+                book_package();
+                break;
+            case 3:
+                display_packages();
+                break;
+            case 4:
+                printf("Exiting the program.\n");
+                return 0;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    }
+
+    return 0;
+}
