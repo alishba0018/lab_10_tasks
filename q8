@@ -1,0 +1,30 @@
+#include <stdio.h>
+
+void linear_search(int n, int arr[], int target, int p){
+    if(p >= n){
+        printf("target element is not present!");
+        return;
+    }
+    if(arr[p]==target){
+        printf("target element is present at %d index",p);
+        return;
+    }
+    return linear_search(n,arr,target,p+1);
+}
+
+int main(){
+    int n,target,p;
+    printf("enter the size of array:");
+    scanf("%d",&n);
+    int arr[n];
+    printf("enter the elements of array:");
+    for(int i=0;i<n;i++){
+        scanf("%d",&arr[i]);
+    }
+    printf("enter the target element:");
+    scanf("%d",&target);
+    printf("enter the current index(starting from zero):");
+    scanf("%d",&p);
+    linear_search(n,arr,target,p);
+    return 0;
+}
